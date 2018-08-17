@@ -9,3 +9,15 @@ import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
+
+class NewDeck extends Component {
+  render() {
+    return (
+      <View>
+        <Text>NewDeck</Text>
+      </View>
+    )
+  }
+}
+
+export default NewDeck;
