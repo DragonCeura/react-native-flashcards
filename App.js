@@ -10,6 +10,7 @@ import reducer from './reducers';
 
 import { purple, white } from './utils/colors';
 
+import Deck from './components/Deck';
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
 
@@ -27,7 +28,7 @@ const routeConfigs = {
     screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Decks',
-      tabBarIcon: ({ tintColor }) => <IonIcons name='ios-bookmarks' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <IonIcons name='ios-albums' size={30} color={tintColor} />
     }
   },
   NewDeck: {
@@ -62,10 +63,25 @@ const Tabs = Platform.OS === 'ios'
   ? createBottomTabNavigator(routeConfigs, tabNavigatorConfig)
   : createMaterialTopTabNavigator(routeConfigs, tabNavigatorConfig);
 
-export default class App extends React.Component {
-  componentDidMount() {
-    console.log("App mounted");
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Deck: {
+    screen: Deck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
   }
+});
+
+export default class App extends React.Component {
 
   // TODO: Render a list of created decks (DeckList component)
   render() {
@@ -73,7 +89,7 @@ export default class App extends React.Component {
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <CustomStatusBar backgroundColor={purple} barStyle='light-content'/>
-          <Tabs />
+          <MainNavigator />
         </View>
       </Provider>
     );

@@ -10,12 +10,14 @@ import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 
+import { ContainerView } from './StyledComponents';
+
 class NewDeck extends Component {
   render() {
     return (
-      <View>
+      <ContainerView>
         <Text>NewDeck</Text>
-      </View>
+      </ContainerView>
     )
   }
 }

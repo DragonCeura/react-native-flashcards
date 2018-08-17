@@ -1,6 +1,6 @@
 // TODO: DeckList view showing all decks (name and number of cards each).
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, FlatList, StyleSheet, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { AppLoading} from 'expo';
@@ -8,19 +8,20 @@ import { AppLoading} from 'expo';
 import { retrieveDecks } from '../actions';
 
 import { getDecks } from '../utils/api';
+import { gray, white } from '../utils/colors';
+
+import Deck from './Deck';
 
 class DeckList extends Component {
   state = {
     read: false
   };
   componentDidMount() {
-    console.log("DeckList mounted");
     const { dispatchRetrieveDecks } = this.props;
 
     // fetch decks
     getDecks()
       .then((decks) => {
-        console.log('decks: ', decks);
         // Dispatch decks have been fetched
         return dispatchRetrieveDecks(decks);
       })
@@ -30,6 +31,27 @@ class DeckList extends Component {
         alert('Error getting decks');
       })
   }
+
+  renderItem = ({ item }) => {
+    const { key, title, questions } = item;
+
+    return (
+      <View style={styles.item}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log('DeckList item pressed');
+            return this.props.navigation.navigate(
+              'Deck',
+              { key }
+            )}}
+        >
+          <Text>{title}</Text>
+          <Text>{questions.length} cards</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   render() {
     const { decks } = this.props;
     const { ready } = this.state;
@@ -39,13 +61,29 @@ class DeckList extends Component {
     }
 
     return (
-      <View>
-        <Text>DeckList</Text>
-        <Text>{JSON.stringify(decks)}</Text>
+      <View style={styles.container}>
+        <FlatList
+          data={Object.values(decks)}
+          renderItem={this.renderItem}
+        />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: gray
+  },
+  item: {
+    alignItems: 'center',
+    backgroundColor: white,
+    borderRadius: Platform.OS === 'ios' ? 16 : 10,
+    padding: 20,
+    margin: 10,
+  }
+})
 
 function mapStateToProps(decks) {
   return {

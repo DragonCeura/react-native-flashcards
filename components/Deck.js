@@ -10,10 +10,12 @@ import { NavigationActions } from 'react-navigation';
 
 class Deck extends Component {
   render() {
-    <View>
-      <Text>Deck</Text>
-    </View>
+    return (
+      <View>
+        <Text>Deck</Text>
+      </View>
+    )
   }
 }
 
-export default Deck;
+export default connect()(Deck);
