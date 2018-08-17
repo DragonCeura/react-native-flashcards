@@ -5,14 +5,8 @@ import {
   MISCELLANEOUS_KEY,
 } from './_deck';
 
-// Create some kind of key for components like FlatList to be happy.
-function generateUID () {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-}
-
 const sampleDecks = {
   React: {
-    key: generateUID(),
     title: 'React',
     questions: [
       {
@@ -26,7 +20,6 @@ const sampleDecks = {
     ]
   },
   JavaScript: {
-    key: generateUID(),
     title: 'JavaScript',
     questions: [
       {

@@ -33,22 +33,22 @@ class DeckList extends Component {
   }
 
   renderItem = ({ item }) => {
-    const { key, title, questions } = item;
+    const { title, questions } = item;
+    const numCardsText = (questions && questions.length !== 1)
+      ? `${questions.length} cards`
+      : `${questions.length} card`;
 
     return (
-      <View style={styles.item}>
-        <TouchableOpacity
-          onPress={() => {
-            console.log('DeckList item pressed');
-            return this.props.navigation.navigate(
-              'Deck',
-              { key }
-            )}}
-        >
-          <Text>{title}</Text>
-          <Text>{questions.length} cards</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => this.props.navigation.navigate(
+            'Deck',
+            { title }
+          )}
+      >
+        <Text>{title}</Text>
+        <Text>{numCardsText}</Text>
+      </TouchableOpacity>
     )
   }
 
@@ -65,6 +65,7 @@ class DeckList extends Component {
         <FlatList
           data={Object.values(decks)}
           renderItem={this.renderItem}
+          keyExtractor={(item) => item.title}
         />
       </View>
     )
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
   },
   item: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: white,
     borderRadius: Platform.OS === 'ios' ? 16 : 10,
     padding: 20,
