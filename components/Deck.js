@@ -7,44 +7,6 @@ import { NavigationActions } from 'react-navigation';
 
 import { black, green, purple, white } from '../utils/colors';
 
-function SubmitBtn ({ onPress }) {
-  return (
-    <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
-      onPress={onPress}>
-        <Text style={styles.submitBtnText}>SUBMIT</Text>
-    </TouchableOpacity>
-  )
-}
-
-function Btn({ onPress, btnStyle = {}, textStyle = {}, text }) {
-  return (
-    <TouchableOpacity style={btnStyle}>
-      <Text style={textStyle}>{text}</Text>
-    </TouchableOpacity>
-  )
-}
-
-function AddCard() {
-  return (
-    <Btn
-      btnStyle={Platform.OS === 'ios' ? styles.iosAndroidAddCardBtn : styles.AndroidAddCardBtn}
-      textStyle={styles.btnTextDark}
-      text={'Add Card'}
-    />
-  )
-}
-
-function StartQuiz() {
-  return (
-    <Btn
-      btnStyle={Platform.OS === 'ios' ? styles.iosStartQuizBtn : styles.AndroidStartQuizBtn}
-      textStyle={styles.btnTextLight}
-      text={'Start Quiz'}
-    />
-  )
-}
-
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
@@ -52,13 +14,22 @@ class Deck extends Component {
       title
     }
   }
+  addCard = () => {
+    console.log('addCard callback');
+    const { navigation, deck } = this.props;
+    console.log('deck:', deck);
+    navigation.navigate('NewCard', { deck });
+  }
+  startQuiz = () => {
+    console.log('startQuiz callback');
+  }
   render() {
-    const { deck } = this.props;
-    console.log('deck: ', deck);
-    const { title, questions } = deck;
+    const { title, questions } = this.props.deck;
+
     const numCardsText = (questions && questions.length !== 1)
       ? `${questions.length} cards`
       : `${questions.length} card`;
+
     return (
       <View style={styles.container}>
         <View style={styles.info}>
@@ -66,8 +37,16 @@ class Deck extends Component {
           <Text style={styles.subtitle}>{numCardsText}</Text>
         </View>
         <View style={styles.actions}>
-          <AddCard />
-          <StartQuiz />
+          <TouchableOpacity
+            style={Platform.OS === 'ios' ? styles.iosAndroidAddCardBtn : styles.AndroidAddCardBtn}
+            onPress={this.addCard}>
+              <Text style={styles.btnTextDark}>{'Add Card'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Platform.OS === 'ios' ? styles.iosStartQuizBtn : styles.AndroidStartQuizBtn}
+            onPress={this.startQuiz}>
+              <Text style={styles.btnTextLight}>{'Start Quiz'}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
@@ -150,7 +129,7 @@ function mapStateToProps(state, { navigation }) {
 
   return {
     deck: state[title]
-  }
+  };
 }
 
 // TODO: Option to add a new card/question to the deck -> routing to NewCard view

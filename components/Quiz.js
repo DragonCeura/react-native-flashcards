@@ -14,3 +14,15 @@ import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
+
+class Quiz extends Component {
+  render() {
+    return (
+      <View>
+        <Text>QUIZ TIME</Text>
+      </View>
+    )
+  }
+}
+
+export default Quiz;

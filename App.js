@@ -13,6 +13,8 @@ import { purple, white } from './utils/colors';
 import Deck from './components/Deck';
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
+import NewCard from './components/NewCard';
+import Quiz from './components/Quiz';
 
 function CustomStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -78,6 +80,12 @@ const MainNavigator = createStackNavigator({
         backgroundColor: purple,
       }
     }
+  },
+  NewCard: {
+    screen: NewCard
+  },
+  Quiz: {
+    screen: Quiz
   }
 });
 
