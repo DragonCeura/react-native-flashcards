@@ -7,8 +7,8 @@ import { AppLoading} from 'expo';
 
 import { retrieveDecks } from '../actions';
 
-import { getDecks } from '../utils/api';
-import { gray, white } from '../utils/colors';
+import { getDecks, clearDecks } from '../utils/api';
+import { gray, orange, white } from '../utils/colors';
 
 import Deck from './Deck';
 
@@ -29,7 +29,11 @@ class DeckList extends Component {
       .catch((error) => {
         console.log('Error getting decks: ', error);
         alert('Error getting decks');
-      })
+      });
+  }
+
+  resetDecks = () => {
+    clearDecks();
   }
 
   renderItem = ({ item }) => {
@@ -54,6 +58,7 @@ class DeckList extends Component {
 
   render() {
     const { decks } = this.props;
+    console.log('DeckList decks: ', decks);
     const { ready } = this.state;
 
     if (ready === false) {
@@ -67,6 +72,12 @@ class DeckList extends Component {
           renderItem={this.renderItem}
           keyExtractor={(item) => item.title}
         />
+        <TouchableOpacity
+          style={styles.resetBtn}
+          onPress={this.resetDecks}
+        >
+          <Text>Reset Decks</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -84,6 +95,12 @@ const styles = StyleSheet.create({
     borderRadius: Platform.OS === 'ios' ? 16 : 10,
     padding: 20,
     margin: 10,
+  },
+  resetBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: orange,
   }
 })
 

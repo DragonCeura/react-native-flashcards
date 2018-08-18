@@ -5,35 +5,41 @@ import {
   MISCELLANEOUS_KEY,
 } from './_deck';
 
-const sampleDecks = {
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
+function sampleDecks() {
+  sample = {
+    React: {
+      title: 'React',
+      questions: [
+        {
+          question: 'What is React?',
+          answer: 'A library for managing user interfaces'
+        },
+        {
+          question: 'Where do you make Ajax requests in React?',
+          answer: 'The componentDidMount lifecycle event'
+        }
+      ]
+    },
+    JavaScript: {
+      title: 'JavaScript',
+      questions: [
+        {
+          question: 'What is a closure?',
+          answer: 'The combination of a function and the lexical environment within which that function was declared.'
+        }
+      ]
+    }
   }
+
+  AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(sample));
+
+  return sample;
 }
 
 function getDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then((results) => {
-      return results === null ? sampleDecks : JSON.parse(results);
+      return results === null ? sampleDecks() : JSON.parse(results);
     })
 }
 
@@ -59,22 +65,31 @@ function saveDeckTitle(title) {
   );
 }
 
-function addCardToDeck({ card, deck }) {
-  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-    [deck]: {
-      questions:[
-        ...questions,
-        card
+function addCardToDeck({ deck }) {
+  console.log('api addCardToDeck deck: ', deck);
+  console.log('merging the following object: ', {
+    [deck.title]: {
+      ...deck,
+      questions: [
+        ...deck.questions
       ]
     }
-  }))
+  });
+  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+    [deck.title]: {
+      ...deck,
+      questions: [
+        ...deck.questions
+      ]
+    }
+  }), () => {AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {console.log(result)})});
 }
 
 // TODO: implement to speed up debugging of adding?
 function removeCardFromDeck() {}
 
 function clearDecks() {
-  AsyncStorage.removeItem(DECKS_STORAGE_KEY);
+  return AsyncStorage.removeItem(DECKS_STORAGE_KEY);
 }
 
 export {

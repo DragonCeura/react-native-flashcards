@@ -22,11 +22,10 @@ function addDeck(deck) {
   };
 }
 
-function addCard(deck, card) {
+function addCard(deck) {
   return {
     type: ADD_CARD,
-    deck,
-    card
+    deck
   };
 }
 

@@ -6,24 +6,24 @@ function decks (state = {}, action) {
       return {
         ...state,
         ...action.decks
-      }
+      };
     case ADD_DECK:
       return {
         ...state,
         ...action.deck
-      }
+      };
     case ADD_CARD:
       return {
         ...state,
-        [action.deck]: {
-          questions:[
-            ...state[action.deck].questions,
-            action.card
+        [action.deck.title]: {
+          ...action.deck,
+          questions: [
+            ...action.deck.questions
           ]
         }
-      }
+      };
     default :
-      return state
+      return state;
   }
 }
 
