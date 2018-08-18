@@ -33,7 +33,10 @@ class DeckList extends Component {
   }
 
   resetDecks = () => {
-    clearDecks();
+    clearDecks()
+      .then(() => {
+        alert('Decks reset to initial sample decks. Please reload the app.')
+      })
   }
 
   renderItem = ({ item }) => {

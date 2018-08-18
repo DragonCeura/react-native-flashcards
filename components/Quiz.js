@@ -16,6 +16,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 
 class Quiz extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { deck } = navigation.state.params;
+    return {
+      title: `${deck.title} Quiz`
+    }
+  }
   render() {
     return (
       <View>
@@ -25,4 +31,11 @@ class Quiz extends Component {
   }
 }
 
-export default Quiz;
+function mapStateToProps(state, { navigation }) {
+  const { deck } = navigation.state.params;
+  return {
+    deck
+  };
+}
+
+export default connect(mapStateToProps)(Quiz);

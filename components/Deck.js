@@ -15,13 +15,13 @@ class Deck extends Component {
     }
   }
   addCard = () => {
-    console.log('addCard callback');
     const { navigation, deck } = this.props;
-    console.log('deck:', deck);
     navigation.navigate('NewCard', { deck });
   }
   startQuiz = () => {
+    const { navigation, deck } = this.props;
     console.log('startQuiz callback');
+    navigation.navigate('Quiz', { deck });
   }
   render() {
     const { title, questions } = this.props.deck;
