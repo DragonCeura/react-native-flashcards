@@ -61,7 +61,6 @@ class DeckList extends Component {
 
   render() {
     const { decks } = this.props;
-    console.log('DeckList decks: ', decks);
     const { ready } = this.state;
 
     if (ready === false) {

@@ -43,7 +43,7 @@ class NewCard extends Component {
     // go back
     this.toDeck();
 
-    addCardToDeck({ deck });
+    addCardToDeck(deck);
   }
 
   toDeck = () => {

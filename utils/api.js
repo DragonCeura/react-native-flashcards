@@ -50,31 +50,16 @@ function getDeck(id) {
     });
 }
 
-// TODO: implement saving the deck title. (Only used when creating a new deck?)
-// Only interface for creating a new deck?
-function saveDeckTitle(title) {
+function addNewDeck(newDeck) {
   return AsyncStorage.mergeItem(
     DECKS_STORAGE_KEY,
-    JSON.stringify(
-      {
-        key: generateUID(),
-        title,
-        questions: []
-      }
-    )
+    JSON.stringify({
+      [newDeck.title]: newDeck
+    })
   );
 }
 
-function addCardToDeck({ deck }) {
-  console.log('api addCardToDeck deck: ', deck);
-  console.log('merging the following object: ', {
-    [deck.title]: {
-      ...deck,
-      questions: [
-        ...deck.questions
-      ]
-    }
-  });
+function addCardToDeck(deck) {
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
     [deck.title]: {
       ...deck,
@@ -95,7 +80,7 @@ function clearDecks() {
 export {
   getDecks,
   getDeck,
-  saveDeckTitle,
+  addNewDeck,
   addCardToDeck,
   removeCardFromDeck,
   clearDecks,
