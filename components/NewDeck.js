@@ -41,7 +41,8 @@ class NewDeck extends Component {
   }
 
   toDeck = (newDeck) => {
-    this.props.navigation.navigate('Deck', newDeck);
+    const { navigation } = this.props;
+    navigation.navigate('Deck', newDeck);
   }
 
   onChangeTitle = (title) => {
@@ -63,7 +64,7 @@ class NewDeck extends Component {
         <TouchableOpacity
           onPress={this.submit}
           disabled={title === ''}>
-            <Text>{'Create Deck'}</Text>
+            <Text>Create Deck</Text>
         </TouchableOpacity>
       </View>
     )

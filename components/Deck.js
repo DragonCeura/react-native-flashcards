@@ -20,8 +20,11 @@ class Deck extends Component {
   }
   startQuiz = () => {
     const { navigation, deck } = this.props;
-    console.log('startQuiz callback');
-    navigation.navigate('Quiz', { deck });
+    if (deck.questions.length > 0){
+      navigation.navigate('Quiz', { deck });
+    } else {
+      alert('Cannot start quiz without cards. Please add cards to this deck to begin.');
+    }
   }
   render() {
     const { title, questions } = this.props.deck;
