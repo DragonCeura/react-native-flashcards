@@ -34,14 +34,14 @@ class NewDeck extends Component {
       title: ''
     }));
 
-    // go to decklist view
-    this.toHome();
+    // go to the newly created deck
+    this.toDeck(newDeck);
 
     addNewDeck(newDeck);
   }
 
-  toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({key: 'NewDeck'}))
+  toDeck = (newDeck) => {
+    this.props.navigation.navigate('Deck', newDeck);
   }
 
   onChangeTitle = (title) => {
@@ -63,7 +63,7 @@ class NewDeck extends Component {
         <TouchableOpacity
           onPress={this.submit}
           disabled={title === ''}>
-            <Text>{'Submit'}</Text>
+            <Text>{'Create Deck'}</Text>
         </TouchableOpacity>
       </View>
     )
