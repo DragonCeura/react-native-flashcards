@@ -79,6 +79,5 @@ export {
   getDeck,
   addNewDeck,
   addCardToDeck,
-  removeCardFromDeck,
   clearDecks,
 }
