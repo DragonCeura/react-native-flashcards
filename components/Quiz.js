@@ -18,13 +18,20 @@ class Quiz extends Component {
   state = {
     score: 0,
     numQuestionsAnswered: 0,
-    showAnswer: false
+    showAnswer: false,
+    questions: this.props.deck.questions
+  }
+
+  componentDidMount() {
+    this.shuffleDeck();
   }
 
   restartQuiz = () => {
     const { deck, navigation } = this.props;
 
     navigation.navigate('Quiz', deck);
+
+    this.shuffleDeck();
 
     this.setState({
       score: 0,
@@ -39,9 +46,7 @@ class Quiz extends Component {
   }
 
   quizCard = () => {
-    const { deck } = this.props;
-    const { questions } = deck;
-    const { numQuestionsAnswered, showAnswer } = this.state;
+    const { numQuestionsAnswered, showAnswer, questions } = this.state;
 
     const card = questions[numQuestionsAnswered];
     const currentCardNumber = numQuestionsAnswered + 1;
@@ -141,9 +146,22 @@ class Quiz extends Component {
     )
   }
 
-  // TODO: Shuffle the deck to randomize each time the user takes the quiz.
-  shuffleDeck = (deck) => {
+  // TODO: Shuffle the deck (questions) to randomize each time the user takes the quiz.
+  shuffleDeck = () => {
+    let { questions } = this.state;
 
+    const deckSize = questions.length;
+    let tempCard, toSwap;
+    for (i = deckSize - 1; i > 0; i--) {
+         toSwap = Math.floor(Math.random() * i);
+         tempCard = questions[i];
+         questions[i] = questions[toSwap];
+         questions[toSwap] = tempCard;
+     }
+
+     this.setState({
+       questions
+     })
   }
 
   render() {
