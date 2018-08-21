@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
+
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params;
@@ -19,10 +21,6 @@ class Quiz extends Component {
     showAnswer: false
   }
 
-  // TODO: Score card result.
-  // When the last question is answered, a score is displayed. This can be displayed as a percentage of correct answers or just the number of questions answered correctly.
-  // When the score is displayed, buttons are displayed to either start the quiz over or go back to the Individual Deck view.
-  // Both the 'Restart Quiz' and 'Back to Deck' buttons route correctly to their respective views.
   restartQuiz = () => {
     const { deck, navigation } = this.props;
 
@@ -40,12 +38,6 @@ class Quiz extends Component {
     navigation.navigate('Deck', deck);
   }
 
-  // TODO: Main view while completing the quiz.
-  // The view displays the number of questions remaining.
-
-  // TODO: Individual cards being shown during the quiz.
-  // The question is displayed, along with a button to show the answer.
-  // Pressing the 'Show Answer' button displays the answer.
   quizCard = () => {
     const { deck } = this.props;
     const { questions } = deck;
@@ -87,9 +79,10 @@ class Quiz extends Component {
     )
   }
 
-  // TODO: Show answer view
-  // Buttons are included to allow the student to mark their guess as 'Correct' or 'Incorrect'
   showCardAnswer = (card) => {
+    clearLocalNotification()
+      .then(setLocalNotification);
+
     return (
       <View>
         <Text>{card.answer}</Text>

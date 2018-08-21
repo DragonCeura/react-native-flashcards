@@ -1,5 +1,3 @@
-// TODO: Individual deck view including the following:
-// - Option to start a quiz -> routing to the Quiz view
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import { connect } from 'react-redux';
@@ -134,8 +132,5 @@ function mapStateToProps(state, { navigation }) {
     deck: state[title]
   };
 }
-
-// TODO: Option to add a new card/question to the deck -> routing to NewCard view
-function mapDispatchToprops() {}
 
 export default connect(mapStateToProps)(Deck);

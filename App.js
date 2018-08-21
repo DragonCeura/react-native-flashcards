@@ -9,6 +9,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import reducer from './reducers';
 
 import { purple, white } from './utils/colors';
+import { setLocalNotification } from './utils/helpers';
 
 import Deck from './components/Deck';
 import DeckList from './components/DeckList';
@@ -24,7 +25,6 @@ function CustomStatusBar ({ backgroundColor, ...props }) {
   )
 }
 
-// TODO: TabNavigator for DeckList and NewDeck screens.
 const routeConfigs = {
   DeckList: {
     screen: DeckList,
@@ -102,8 +102,10 @@ const MainNavigator = createStackNavigator({
 });
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
 
-  // TODO: Render a list of created decks (DeckList component)
   render() {
     return (
       <Provider store={createStore(reducer)}>

@@ -70,9 +70,6 @@ function addCardToDeck(deck) {
   }), () => {AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {console.log(result)})});
 }
 
-// TODO: implement to speed up debugging of adding?
-function removeCardFromDeck() {}
-
 function clearDecks() {
   return AsyncStorage.removeItem(DECKS_STORAGE_KEY);
 }
