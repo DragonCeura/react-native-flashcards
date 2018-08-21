@@ -146,7 +146,6 @@ class Quiz extends Component {
     )
   }
 
-  // TODO: Shuffle the deck (questions) to randomize each time the user takes the quiz.
   shuffleDeck = () => {
     let { questions } = this.state;
 
@@ -171,7 +170,7 @@ class Quiz extends Component {
     const numCards = deck.questions.length;
 
     return (
-      <View>
+      <View style={styles.container}>
         {(numQuestionsAnswered < numCards)
           ? this.quizCard()
           : this.quizResults()
@@ -180,6 +179,13 @@ class Quiz extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20
+  }
+});
 
 function mapStateToProps(state, { navigation }) {
   const { deck } = navigation.state.params;

@@ -14,28 +14,33 @@ class NewDeck extends Component {
 
   submit = () => {
     const { title } = this.state;
-    const { dispatchAddDeck } = this.props;
+    const { decks, dispatchAddDeck } = this.props;
 
-    const newDeck = {
-      title,
-      questions: []
+    if (decks[title] === undefined) {
+      const newDeck = {
+        title,
+        questions: []
+      }
+
+      dispatchAddDeck(newDeck);
+
+      // reset state
+      this.setState(() => ({
+        title: ''
+      }));
+
+      // go to the newly created deck
+      this.toDeck(newDeck);
+
+      addNewDeck(newDeck);
+    } else {
+      alert(`Cannot add deck because the deck '${title}' already exists.`);
     }
-
-    dispatchAddDeck(newDeck);
-
-    // reset state
-    this.setState(() => ({
-      title: ''
-    }));
-
-    // go to the newly created deck
-    this.toDeck(newDeck);
-
-    addNewDeck(newDeck);
   }
 
   toDeck = (newDeck) => {
     const { navigation } = this.props;
+    navigation.navigate('DeckList');
     navigation.navigate('Deck', newDeck);
   }
 
@@ -53,6 +58,7 @@ class NewDeck extends Component {
           <TextInput
             placeholder="What is your new deck's title?"
             onChangeText={this.onChangeTitle}
+            value={title}
           />
         </View>
         <TouchableOpacity
@@ -73,7 +79,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state, { navigation }) {
-  return {}
+  return {
+    decks: state
+  }
 }
 
 function mapDispatchToprops(dispatch) {

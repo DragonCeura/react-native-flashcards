@@ -23,10 +23,6 @@ class NewCard extends Component {
     const card = { question, answer } = this.state;
     const { deck, dispatchAddCard } = this.props;
 
-    console.log('card to add: ', card);
-    console.log(this.props);
-
-    console.log(deck.questions);
     deck.questions.push(card);
     dispatchAddCard(deck);
 
@@ -43,8 +39,8 @@ class NewCard extends Component {
   }
 
   toDeck = () => {
-    const { deck } = this.props;
-    this.props.navigation.navigate('Deck', deck);
+    const { deck, navigation } = this.props;
+    navigation.navigate('Deck', deck);
   }
 
   onChangeQuestion = (question) => {
@@ -67,10 +63,12 @@ class NewCard extends Component {
           <TextInput
             placeholder='Add your new question here'
             onChangeText={this.onChangeQuestion}
+            value={question}
           />
           <TextInput
             placeholder='Add your new answer here'
             onChangeText={this.onChangeAnswer}
+            value={answer}
           />
         </View>
         <TouchableOpacity
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20
   }
-})
+});
 
 function mapStateToProps(state, { navigation }) {
   const { deck } = navigation.state.params;
