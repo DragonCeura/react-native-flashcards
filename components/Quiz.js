@@ -80,9 +80,6 @@ class Quiz extends Component {
   }
 
   showCardAnswer = (card) => {
-    clearLocalNotification()
-      .then(setLocalNotification);
-
     return (
       <View>
         <Text>{card.answer}</Text>
@@ -121,6 +118,10 @@ class Quiz extends Component {
     const { deck } = this.props;
     const { questions } = deck;
     const { score } = this.state;
+
+      clearLocalNotification()
+        .then(setLocalNotification);
+
     return (
       <View>
         <Text>Your results</Text>
